@@ -219,9 +219,13 @@
 }
 
 .combine-button:disabled {
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: not-allowed;
   transform: none;
+}
+
+.combine-button:disabled::before {
+  display: none;
 }
 
 .combine-button:disabled:hover {
@@ -229,6 +233,16 @@
     linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(200, 200, 200, 0.05) 100%),
     #181818;
   color: #d1d5db;
+  transform: none;
+}
+
+.combine-button-container:has(.combine-button:disabled) {
+  opacity: 0.4;
+}
+
+.combine-button-container:has(.combine-button:disabled):hover {
+  border-color: rgba(255, 255, 255, 0.7);
+  box-shadow: none;
   transform: none;
 }
 
