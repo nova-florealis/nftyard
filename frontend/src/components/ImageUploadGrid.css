@@ -146,6 +146,20 @@
   text-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
 }
 
+.upload-cell.disabled:hover,
+.upload-cell.disabled:hover .upload-cell-inner,
+.upload-label.disabled:hover .upload-placeholder {
+  cursor: default;
+  transform: none;
+  color: #9ca3af;
+  text-shadow: none;
+}
+
+.upload-cell.disabled:hover .upload-cell-inner::before,
+.upload-cell.disabled:hover .image-container::before {
+  left: -100%;
+}
+
 .upload-icon {
   font-size: 24px;
   margin-bottom: 6px;

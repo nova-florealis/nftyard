@@ -121,6 +121,7 @@ function App() {
           <ImageUploadGrid 
             images={uploadedImages}
             onImageUpload={handleImageUpload}
+            disabled={!connected}
           />
           
           
