@@ -45,12 +45,14 @@ function App() {
             images={uploadedImages}
             onImageUpload={handleImageUpload}
           />
-          <button 
-            className="combine-button"
-            onClick={handleCombine}
-          >
-            Combine
-          </button>
+          <div className="combine-button-container">
+            <button 
+              className="combine-button"
+              onClick={handleCombine}
+            >
+              Combine
+            </button>
+          </div>
         </div>
         
         <div className="right-panel">

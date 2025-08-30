@@ -8,23 +8,25 @@ const WalletButton = ({ connected, account, onConnect, onDisconnect }) => {
   };
 
   return (
-    <div className="wallet-button-container">
-      {connected ? (
-        <button 
-          className="wallet-button connected"
-          onClick={onDisconnect}
-          title={account}
-        >
-          {formatAddress(account)}
-        </button>
-      ) : (
-        <button 
-          className="wallet-button disconnected"
-          onClick={onConnect}
-        >
-          Connect Wallet
-        </button>
-      )}
+    <div className="wallet-button-wrapper">
+      <div className="wallet-button-container">
+        {connected ? (
+          <button 
+            className="wallet-button connected"
+            onClick={onDisconnect}
+            title={account}
+          >
+            {formatAddress(account)}
+          </button>
+        ) : (
+          <button 
+            className="wallet-button disconnected"
+            onClick={onConnect}
+          >
+            Connect Wallet
+          </button>
+        )}
+      </div>
     </div>
   );
 };

@@ -82,8 +82,34 @@
   align-items: center;
 }
 
-.combine-button {
+.combine-button-container {
+  position: relative;
   width: 280px;
+  padding: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  margin-top: 15px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background: transparent;
+}
+
+.combine-button-container::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  right: -3px;
+  bottom: -3px;
+  background: rgba(255, 255, 255, 0.7);
+  z-index: -1;
+}
+
+.combine-button-container:hover {
+  border-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.combine-button {
+  width: 100%;
   padding: 16px 32px;
   font-size: 14px;
   font-weight: 400;
@@ -92,15 +118,15 @@
   background: 
     linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(200, 200, 200, 0.05) 100%),
     #181818;
-  border: 1px solid #6b7280;
-  border-radius: 4px;
+  border: 1px solid rgba(156, 163, 175, 0.3);
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   text-transform: uppercase;
   letter-spacing: 1px;
-  margin-top: 15px;
   position: relative;
-  overflow: hidden;
+  box-shadow: 
+    0 8px 32px rgba(255, 255, 255, 0.05),
+    inset 0 0 30px rgba(255, 255, 255, 0.02);
 }
 
 .combine-button::before {
@@ -118,15 +144,11 @@
   left: 100%;
 }
 
-.combine-button:hover {
+.combine-button-container:hover .combine-button {
   background: 
     linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(200, 200, 200, 0.1) 100%),
     #181818;
-  border-color: #d1d5db;
   color: #f9fafb;
-  box-shadow: 
-    0 4px 20px rgba(255, 255, 255, 0.1),
-    0 0 40px rgba(200, 200, 200, 0.05);
   transform: translateY(-1px);
 }
 

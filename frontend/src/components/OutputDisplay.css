@@ -3,14 +3,24 @@
   height: min(350px, 35vw);
   position: relative;
   padding: 4px;
-  border: 1px solid #6b7280;
-  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   background: transparent;
 }
 
+.output-display::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  right: -6px;
+  bottom: -6px;
+  background: rgba(255, 255, 255, 0.7);
+  z-index: -1;
+}
+
 .output-display:hover {
-  border-color: #d1d5db;
+  border-color: rgba(255, 255, 255, 0.7);
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
@@ -22,7 +32,6 @@
     #181818;
   overflow: hidden;
   border: 1px solid rgba(156, 163, 175, 0.3);
-  border-radius: 2px;
   display: flex;
   align-items: center;
   justify-content: center;

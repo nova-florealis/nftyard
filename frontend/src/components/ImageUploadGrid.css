@@ -10,24 +10,61 @@
 .upload-cell {
   position: relative;
   aspect-ratio: 1;
+  padding: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  background: transparent;
+}
+
+.upload-cell::before {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  right: -4px;
+  bottom: -4px;
+  background: rgba(255, 255, 255, 0.7);
+  z-index: -1;
+}
+
+.upload-cell-inner {
+  width: 100%;
+  height: 100%;
   background: 
     linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(200, 200, 200, 0.03) 100%),
     #181818;
-  border: 1px solid #4b5563;
-  border-radius: 4px;
+  border: 1px solid rgba(156, 163, 175, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
   overflow: hidden;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.02);
+  box-shadow: 
+    0 8px 32px rgba(255, 255, 255, 0.05),
+    inset 0 0 30px rgba(255, 255, 255, 0.02);
+}
+
+.upload-cell-inner::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.4s ease;
+}
+
+.upload-cell:hover .upload-cell-inner::before {
+  left: 100%;
 }
 
 .upload-cell:hover {
-  border-color: #6b7280;
-  background: 
-    linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(200, 200, 200, 0.06) 100%),
-    #181818;
-  box-shadow: 
-    0 4px 20px rgba(255, 255, 255, 0.08),
-    inset 0 0 30px rgba(255, 255, 255, 0.03);
+  border-color: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+}
+
+.upload-cell:hover .upload-cell-inner {
   transform: translateY(-1px);
 }
 
