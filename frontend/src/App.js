@@ -6,7 +6,7 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>NFTYard</h1>
-        <p>Welcome to NFTYard Marketplace</p>
+        <p>Welcome to NFTYard</p>
       </header>
     </div>
   );
