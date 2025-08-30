@@ -8,6 +8,7 @@ node_modules/
 # Foundry
 cache/
 out/
+broadcast/
 
 # Frontend build
 frontend/build/

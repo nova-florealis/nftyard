@@ -8,7 +8,7 @@
     "backend": "cd backend && npm run dev",
     "frontend": "cd frontend && npm start",
     "dev": "concurrently \"npm run backend\" \"npm run frontend\"",
-    "deploy": "forge script scripts/Deploy.s.sol --rpc-url http://localhost:8545 --broadcast",
+    "deploy": "forge script script/Deploy.s.sol:DeployScript --fork-url http://localhost:8545 --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 --broadcast",
     "anvil": "anvil",
     "test": "forge test",
     "build": "forge build"
