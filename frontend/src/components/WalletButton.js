@@ -1,7 +1,7 @@
 import React from 'react';
 import './WalletButton.css';
 
-const WalletButton = ({ connected, account, onConnect, onDisconnect }) => {
+const WalletButton = ({ connected, account, onConnect, onDisconnect, mintButton }) => {
   const formatAddress = (address) => {
     if (!address) return '';
     return `${address.substring(0, 6)}...${address.substring(address.length - 4)}`;
@@ -27,6 +27,7 @@ const WalletButton = ({ connected, account, onConnect, onDisconnect }) => {
           </button>
         )}
       </div>
+      {connected && mintButton}
     </div>
   );
 };

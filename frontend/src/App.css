@@ -197,6 +197,21 @@
   transform: translateY(-1px);
 }
 
+.mint-button:disabled,
+.mint-button.loading {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.mint-controls {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  z-index: 1;
+  position: relative;
+}
+
 .mint-section p {
   color: #9ca3af;
   font-size: 12px;

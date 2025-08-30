@@ -13,20 +13,22 @@ function App() {
     connect, 
     disconnect, 
     userNFTs, 
+    nftYardBalance,
     mintInitialNFTs, 
     combineNFTs 
   } = useBlockchain();
   const [uploadedImages, setUploadedImages] = useState(Array(6).fill(null));
   const [selectedNFTs, setSelectedNFTs] = useState([]);
   const [outputImage, setOutputImage] = useState(null);
+  const [isMinting, setIsMinting] = useState(false);
 
   const handleImageUpload = (index, imageData) => {
     const newImages = [...uploadedImages];
     newImages[index] = imageData;
     setUploadedImages(newImages);
     
-    // Find corresponding NFT token ID for this index
-    const nftForIndex = userNFTs.find(nft => nft.tokenId === index + 1);
+    // Find corresponding NFT for this index (use available NFTs in order)
+    const nftForIndex = userNFTs[index];
     if (nftForIndex && imageData) {
       // Add to selected NFTs if not already selected
       if (!selectedNFTs.includes(nftForIndex.tokenId)) {
@@ -68,18 +70,23 @@ function App() {
     }
   };
 
+  const defaultMintAmount = 6;
+
   const handleMintInitial = async () => {
-    if (!connected) {
+    if (!connected || isMinting) {
       console.log('Please connect your wallet first');
       return;
     }
 
+    setIsMinting(true);
     try {
-      await mintInitialNFTs();
-      console.log('Successfully minted 6 UserInputNFTs!');
+      await mintInitialNFTs(defaultMintAmount);
+      console.log(`Successfully minted ${defaultMintAmount} UserInputNFTs!`);
     } catch (error) {
       console.error('Error minting NFTs:', error);
       console.log('Failed to mint NFTs. Please try again.');
+    } finally {
+      setIsMinting(false);
     }
   };
 
@@ -90,33 +97,32 @@ function App() {
         account={account}
         onConnect={connect}
         onDisconnect={disconnect}
+        mintButton={
+          <div className="mint-controls-top">
+            <button 
+              className={`mint-button-top ${isMinting ? 'loading' : ''}`}
+              onClick={handleMintInitial}
+              disabled={isMinting}
+            >
+              {isMinting ? 'Minting...' : `Mint ${defaultMintAmount} NFTs (${userNFTs.length})`}
+            </button>
+            <button 
+              className="nftyard-count-button"
+              disabled={true}
+            >
+              NFTYard NFTs ({nftYardBalance})
+            </button>
+          </div>
+        }
       />
 
       <main className="main-content">
         <div className="left-panel">
-          {connected && userNFTs.length === 0 && (
-            <div className="mint-section">
-              <button 
-                className="mint-button"
-                onClick={handleMintInitial}
-              >
-                Mint 6 UserInput NFTs
-              </button>
-              <p>First, mint your 6 UserInput NFTs to get started</p>
-            </div>
-          )}
-          
           <ImageUploadGrid 
             images={uploadedImages}
             onImageUpload={handleImageUpload}
           />
           
-          {connected && userNFTs.length > 0 && (
-            <div className="nft-status">
-              <p>You own {userNFTs.length} UserInput NFTs</p>
-              <p>Selected for combining: {selectedNFTs.length}</p>
-            </div>
-          )}
           
           <div className="combine-button-container">
             <button 

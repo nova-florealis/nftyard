@@ -11,6 +11,7 @@ export const useBlockchain = () => {
   const [userInputNFTContract, setUserInputNFTContract] = useState(null);
   const [nftYardContract, setNFTYardContract] = useState(null);
   const [userNFTs, setUserNFTs] = useState([]);
+  const [nftYardBalance, setNFTYardBalance] = useState(0);
 
   useEffect(() => {
     // Check if MetaMask is available or use local provider
@@ -133,7 +134,11 @@ export const useBlockchain = () => {
       
       // Only check for tokens if user has some
       if (balance > 0) {
-        for (let i = 1; i <= 6; i++) {
+        // Get total supply to know how many tokens exist
+        const totalSupply = await contract.totalSupply();
+        console.log('Total supply:', totalSupply.toString());
+        
+        for (let i = 1; i <= totalSupply; i++) {
           try {
             const owner = await contract.ownerOf(i);
             if (owner.toLowerCase() === userAddress.toLowerCase()) {
@@ -203,19 +208,20 @@ export const useBlockchain = () => {
     }
   };
 
-  const mintInitialNFTs = async () => {
+  const mintInitialNFTs = async (amount = 6) => {
     try {
       if (!userInputNFTContract || !account) {
         console.error('Contract or account not available');
         return;
       }
 
-      console.log('Minting 6 UserInputNFTs to:', account);
-      const tx = await userInputNFTContract.mintInitialSix(account);
+      console.log(`Minting ${amount} UserInputNFTs to:`, account);
+      const tx = await userInputNFTContract.mintInitial(account, amount);
       await tx.wait();
       
       console.log('Initial NFTs minted successfully');
       await loadUserNFTs(account, userInputNFTContract);
+      await loadNFTYardBalance(account, nftYardContract);
     } catch (error) {
       console.error('Error minting initial NFTs:', error);
     }
@@ -246,11 +252,29 @@ export const useBlockchain = () => {
       
       console.log('NFTs combined successfully');
       await loadUserNFTs(account, userInputNFTContract);
+      await loadNFTYardBalance(account, nftYardContract);
       
       return receipt;
     } catch (error) {
       console.error('Error combining NFTs:', error);
       throw error;
+    }
+  };
+
+  const loadNFTYardBalance = async (userAddress, contract) => {
+    try {
+      if (!contract || !userAddress) {
+        console.log('loadNFTYardBalance: Missing contract or userAddress');
+        setNFTYardBalance(0);
+        return;
+      }
+      
+      const balance = await contract.balanceOf(userAddress);
+      setNFTYardBalance(Number(balance.toString()));
+      console.log('NFTYard balance:', balance.toString());
+    } catch (error) {
+      console.error('Error loading NFTYard balance:', error);
+      setNFTYardBalance(0);
     }
   };
 
@@ -261,6 +285,7 @@ export const useBlockchain = () => {
     setUserInputNFTContract(null);
     setNFTYardContract(null);
     setUserNFTs([]);
+    setNFTYardBalance(0);
   };
 
   // Load user NFTs when contracts and account are ready
@@ -268,7 +293,10 @@ export const useBlockchain = () => {
     if (userInputNFTContract && account) {
       loadUserNFTs(account, userInputNFTContract);
     }
-  }, [userInputNFTContract, account]);
+    if (nftYardContract && account) {
+      loadNFTYardBalance(account, nftYardContract);
+    }
+  }, [userInputNFTContract, nftYardContract, account]);
 
   return {
     provider,
@@ -280,6 +308,7 @@ export const useBlockchain = () => {
     userInputNFTContract,
     nftYardContract,
     userNFTs,
+    nftYardBalance,
     mintInitialNFTs,
     combineNFTs,
     loadUserNFTs

@@ -7,27 +7,24 @@ import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract UserInputNFT is ERC721, Ownable {
     uint256 private _tokenIds;
-    uint256 public constant MAX_SUPPLY = 6;
-    bool public deployed = false;
     
     event InitialMint(address indexed recipient, uint256[] tokenIds);
     
     constructor() ERC721("UserInputNFT", "UIN") Ownable(msg.sender) {}
     
-    function mintInitialSix(address recipient) external {
-        require(!deployed, "Initial mint already completed");
+    function mintInitial(address recipient, uint256 amount) external {
         require(recipient != address(0), "Invalid recipient");
+        require(amount > 0 && amount <= 50, "Invalid amount");
         
-        uint256[] memory tokenIds = new uint256[](MAX_SUPPLY);
+        uint256[] memory tokenIds = new uint256[](amount);
         
-        for (uint256 i = 0; i < MAX_SUPPLY; i++) {
+        for (uint256 i = 0; i < amount; i++) {
             _tokenIds++;
             uint256 tokenId = _tokenIds;
             _mint(recipient, tokenId);
             tokenIds[i] = tokenId;
         }
         
-        deployed = true;
         emit InitialMint(recipient, tokenIds);
     }
     

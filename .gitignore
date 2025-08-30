@@ -10,6 +10,9 @@ cache/
 out/
 broadcast/
 
+# Anvil state
+anvil-state.json
+
 # Frontend build
 frontend/build/
 frontend/node_modules/
